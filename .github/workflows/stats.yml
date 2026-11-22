@@ -1,28 +1,38 @@
-
-name: GitHub Profile Stats
+name: Update Commit Time Stats
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 0 * * *'
+    - cron: "0 0 * * *"
+
+permissions:
+  contents: write
 
 jobs:
-  update-readme:
+  update-stats:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: anmol098/waka-readme-stats@master
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
         with:
+          python-version: "3.12"
+
+      - name: Generate commit statistics
+        env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
-          WAKATIME_API_KEY: ${{ secrets.WAKATIME_API_KEY }}
-          SHOW_COMMIT: "True"
-          SHOW_DAYS_OF_WEEK: "False"
-          SHOW_LANGUAGE: "False"
-          SHOW_OS: "False"
-          SHOW_EDITORS: "False"
-          SHOW_PROJECTS: "False"
-          SHOW_TIMEZONE: "False"
-          SHOW_LANGUAGE_PER_REPO: "False"
-          SHOW_SHORT_INFO: "False"
-          SHOW_PROFILE_VIEWS: "False"
-          SHOW_AI_CODING: "False"
-          SHOW_UPDATED_DATE: "False"
+        run: python scripts/commit_stats.py
+
+      - name: Commit README changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add README.md
+          if ! git diff --cached --quiet; then
+            git commit -m "docs: update commit time statistics"
+            git push
+          fi
+
