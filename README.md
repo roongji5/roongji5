@@ -26,7 +26,7 @@
 
 <br/><br/>
 
-## 🌙 I'm a daytime 💻
+## I'm a daytime 💻
 
 <!--START_SECTION:commit-time-->
 **Daytime Coder** · KST · 53 commits analyzed
