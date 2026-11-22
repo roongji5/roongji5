@@ -29,10 +29,11 @@
 <h3 align="center">🌙 My Coding Activity 🌙</h3>
 
 <!--START_SECTION:commit-time-->
+<pre>
+Statistics will appear after running GitHub Actions.
+</pre>
 <!--END_SECTION:commit-time-->
 
-<!--START_SECTION:waka-->
-<!--END_SECTION:waka-->
 
 <br/>
 
